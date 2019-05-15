@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "harmonograph.h"
 
 class ofApp : public ofBaseApp{
 
@@ -21,24 +22,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		// P is the phase factor.
-		float p1 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / TWO_PI));
-		float p2 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / TWO_PI));
-		float p3 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / TWO_PI));
-		float p4 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / TWO_PI));
-		// D is dampining factor.
-		float d1 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.1));
-		float d2 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.1));
-		float d3 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.1));
-		float d4 = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.1));
-		// F is the frequency?
-		int f1 = (rand() % 10) + 1;
-		int f2 = (rand() % 10) + 1;
-		int f3 = (rand() % 10) + 1;
-		int f4 = (rand() % 10) + 1;
-
-		float calcX(float t);
-		float calcy(float t);
-
-		vector<ofPoint> points;
+		std::vector<harmonograph> harmonographs;
 };

@@ -5,40 +5,34 @@ void ofApp::setup(){
 	ofSetFrameRate(0);
 	ofSetVerticalSync(true);
 	ofBackground(0, 0, 0);
+
+	harmonograph h1 = harmonograph();
+	harmonograph h2 = harmonograph();
+
+	h1.setup(ofColor::red);
+	h2.setup(ofColor::cadetBlue);
+
+	harmonographs.push_back(h1);
+	harmonographs.push_back(h2);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	// See: https://stackoverflow.com/questions/686353/random-float-number-generation
-	// See: http://www.walkingrandomly.com/?p=151
-	// See: https://fronkonstin.com/tag/harmonograph/
-
-	auto t = ofGetElapsedTimef();
-
-	auto posX = exp(-d1 * t)*sin(t*f1 + p1) + exp(-d2 * t)*sin(t*f2 + p2);
-	auto posY = exp(-d3 * t)*sin(t*f3 + p3) + exp(-d4 * t)*sin(t*f4 + p4);
-
-	ofPoint tempP = ofPoint(posX * 400, posY * 400);
-	points.push_back(tempP);
+	for (auto & h : harmonographs)
+	{
+		h.update();
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofSetColor(ofColor::aqua);
-	ofNoFill(); 
 
 	ofTranslate((ofGetWidth() / 2),
 		(ofGetHeight() / 2));
 
-	auto clipping_Vert = 300;
-
-	if (points.size() >= clipping_Vert)
+	for (auto & h : harmonographs)
 	{
-		ofBeginShape();
-		for (int i = clipping_Vert; i < points.size(); i++) {
-			ofVertex(points[i].x, points[i].y);
-		}
-		ofEndShape();
+		h.draw();
 	}
 }
 
@@ -90,16 +84,6 @@ void ofApp::windowResized(int w, int h){
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
 
-}
-
-float ofApp::calcX(float t)
-{
-	return 0.0f;
-}
-
-float ofApp::calcy(float t)
-{
-	return 0.0f;
 }
 
 //--------------------------------------------------------------
