@@ -21,6 +21,9 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+		vector<glm::vec3> offsets;
+
 		ofImage image;
 		ofMesh mesh;
+		ofEasyCam easyCam;
 };
