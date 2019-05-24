@@ -9,8 +9,7 @@ void ofApp::setup(){
 			ofRandom(0, 10000),
 			ofRandom(0, 10000)));
 	}
-
-	displacementScale = 0.75;
+	displacementScale = 0;
 }
 
 //--------------------------------------------------------------
@@ -52,6 +51,9 @@ void ofApp::keyPressed(int key){
 		break;
 	case 'a':
 		displacementScale = displacementScale - 1;
+		break;
+	case 'z':
+		displacementScale = 0.0;
 		break;
 	}
 }
