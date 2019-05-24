@@ -2,47 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
-	m_mesh.setMode(OF_PRIMITIVE_LINES);
-	m_mesh.enableIndices();
-	m_mesh.enableColors();
-
-	auto width = ofGetWidth();
-	auto height = ofGetHeight();
-
-	int numColumns = 10;
-	int numRows = 40;
-
-	vector<glm::vec3> verts;
-	vector<ofDefaultColorType> colors;
-
-	for (int c = 0; c < numColumns; ++c) {
-		for (int r = 0; r < numRows; ++r) {
-			verts.push_back(glm::vec3(
-				(c * (height / numColumns)),
-				(r *(width / numRows)),
-				0.0
-			));
-			colors.push_back(ofColor(c, r, 255));
-		}
-	}
-
-	m_mesh.addColors(colors);
-	m_mesh.addVertices(verts);
-
-	float connectionDistance = width/numColumns;
-	int numVerts = m_mesh.getNumVertices();
-	for (int a = 0; a < numVerts; ++a) {
-		ofVec3f verta = m_mesh.getVertex(a);
-		for (int b = a + 1; b < numVerts; ++b) {
-			ofVec3f vertb = m_mesh.getVertex(b);
-			float distance = verta.distance(vertb);
-			if (distance <= connectionDistance) {
-				m_mesh.addIndex(a);
-				m_mesh.addIndex(b);
-			}
-		}
-	}
+	m_mesh.setup(20, 20, ofColor::black);
 }
 
 //--------------------------------------------------------------
@@ -52,7 +12,16 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	m_mesh.draw();
+	ofColor centerColor = ofColor(200,200,200);
+	ofColor edgeColor = ofColor(255,255,255);
+	ofBackgroundGradient(centerColor, edgeColor, OF_GRADIENT_CIRCULAR);
+
+	easyCam.begin();
+		ofPushMatrix();
+			ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
+			m_mesh.draw();
+		ofPopMatrix();
+	easyCam.end();
 }
 
 //--------------------------------------------------------------
