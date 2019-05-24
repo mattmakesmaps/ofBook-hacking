@@ -24,5 +24,6 @@ class ofApp : public ofBaseApp{
 
 		mkMeshGrid m_mesh;
 		ofEasyCam easyCam;
-		
+		vector<glm::vec3> offsets;
+		float displacementScale;
 };

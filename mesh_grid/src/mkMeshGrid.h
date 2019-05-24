@@ -12,7 +12,7 @@ public:
 	void update();
 	void draw();
 
-	ofMesh m_mesh;
+	ofMesh mesh;
 	vector<glm::vec3> m_verts;
 	vector<ofDefaultColorType> m_colors;
 

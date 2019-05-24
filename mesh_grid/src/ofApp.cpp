@@ -3,11 +3,30 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	m_mesh.setup(20, 20, ofColor::black);
+	for (int i = 0; i < m_mesh.mesh.getNumVertices(); ++i) {
+		offsets.push_back(glm::vec3(
+			ofRandom(0, 10000),
+			ofRandom(0, 10000),
+			ofRandom(0, 10000)));
+	}
+
+	displacementScale = 0.75;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+	// Jitter Example from ofBook
+	int numVerts = m_mesh.mesh.getNumVertices();
+	for (int i = 0; i < numVerts; i++) {
+		glm::vec3 vert = m_mesh.mesh.getVertex(i);
+		float time = ofGetElapsedTimef();
+		float timeScale = 5.0;
+		glm::vec3 timeOffsets = offsets[i];
+		vert.x += (ofSignedNoise(time*timeScale + timeOffsets.x)) * displacementScale;
+		vert.y += (ofSignedNoise(time*timeScale + timeOffsets.y)) * displacementScale;
+		vert.z += (ofSignedNoise(time*timeScale + timeOffsets.z)) * displacementScale;
+		m_mesh.mesh.setVertex(i, vert);
+	}
 }
 
 //--------------------------------------------------------------
@@ -26,7 +45,15 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	switch (key)
+	{
+	case 'q':
+		displacementScale = displacementScale + 1;
+		break;
+	case 'a':
+		displacementScale = displacementScale - 1;
+		break;
+	}
 }
 
 //--------------------------------------------------------------
