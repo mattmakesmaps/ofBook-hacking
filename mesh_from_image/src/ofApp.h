@@ -26,4 +26,12 @@ class ofApp : public ofBaseApp{
 		ofImage image;
 		ofMesh mesh;
 		ofEasyCam easyCam;
+
+		// Orbit examples
+		ofMesh meshCopy;
+		bool orbiting;
+		float startOrbitTime;
+		vector<float> distances;
+		vector<float> angles;
+		ofVec3f meshCentroid;
 };
