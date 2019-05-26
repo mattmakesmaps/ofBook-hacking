@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	m_mesh.setup(20, 20, ofColor::black);
+	m_mesh.setup(4, 4, ofColor::black);
 	for (int i = 0; i < m_mesh.mesh.getNumVertices(); ++i) {
 		offsets.push_back(glm::vec3(
 			ofRandom(0, 10000),

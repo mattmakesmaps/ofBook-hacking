@@ -15,6 +15,7 @@ public:
 	ofMesh mesh;
 	vector<glm::vec3> m_verts;
 	vector<ofDefaultColorType> m_colors;
+	vector<ofMesh> mesh_vect;
 
 	int m_numColumns;
 	int m_numRows;
