@@ -2,12 +2,20 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	m_square.setup(1000);
+	for (int i = 0; i < 9; ++i)
+	{
+		MKSquare tempSquare;
+		tempSquare.setup(250);
+		m_squares.push_back(tempSquare);
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-	m_square.update();
+	for (auto& square : m_squares)
+	{
+		square.update();
+	}
 }
 
 //--------------------------------------------------------------
@@ -16,12 +24,53 @@ void ofApp::draw() {
 	ofColor edgeColor = ofColor(255, 255, 255);
 	ofBackgroundGradient(centerColor, edgeColor, OF_GRADIENT_CIRCULAR);
 
+	// Draw a 3 by n grid of squares.
 	easyCam.begin();
+	int squares_per_row = 3;
 	ofPushMatrix();
-	ofTranslate(-ofGetWidth() / 2, -ofGetHeight() / 2);
-	m_square.draw();
+		for (int s = 0; s < m_squares.size(); ++s)
+		{
+			m_squares[s].draw();
+			if ((s + 1) % squares_per_row == 0)
+			{
+				ofPopMatrix();
+					ofTranslate(0.0, 250, 0.0);
+				ofPushMatrix();
+			}
+			else
+			{
+				ofTranslate(250, 0.0, 0.0);
+			}
+		}
 	ofPopMatrix();
 	easyCam.end();
+
+	// The above maps to the following.
+	/*
+	ofPushMatrix();
+		m_squares[0].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[1].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[2].draw();
+	ofPopMatrix();
+		ofTranslate(0.0, 250, 0.0);
+	ofPushMatrix();
+		m_squares[3].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[4].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[5].draw();
+	ofPopMatrix();
+		ofTranslate(0.0, 250, 0.0);
+	ofPushMatrix();
+		m_squares[6].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[7].draw();
+		ofTranslate(250, 0.0, 0.0);
+		m_squares[8].draw();
+	ofPopMatrix();
+	*/
 }
 
 //--------------------------------------------------------------
@@ -29,13 +78,22 @@ void ofApp::keyPressed(int key) {
 	switch (key)
 	{
 	case 'q':
-		m_square.displacementScale = m_square.displacementScale + 1;
+		for (auto& square : m_squares)
+		{
+			square.displacementScale = square.displacementScale + 1;
+		}
 		break;
 	case 'a':
-		m_square.displacementScale = m_square.displacementScale - 1;
+		for (auto& square : m_squares)
+		{
+			square.displacementScale = square.displacementScale - 1;
+		}
 		break;
 	case 'z':
-		m_square.displacementScale = 0.0;
+		for (auto& square : m_squares)
+		{
+			square.displacementScale = 0;
+		}
 		break;
 	}
 }

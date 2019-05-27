@@ -22,6 +22,6 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
-	MKSquare m_square;
+	std::vector<MKSquare> m_squares;
 	ofEasyCam easyCam;
 };
