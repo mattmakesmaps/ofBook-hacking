@@ -1,6 +1,8 @@
 #pragma once
 #include "ofMain.h"
 
+using namespace glm;
+
 class MKSquare
 {
 public:
@@ -12,11 +14,14 @@ public:
 	void update();
 	void draw();
 
+	bool pip_wn1(vec3 point);
+
 	ofMesh mesh;
-	vector<glm::vec3> offsets;
+	vector<vec3> offsets;
 	float displacementScale;
 
-	int m_length;
 
 private:
+	int m_length;
+	int _is_left(vec3 p, vec3 p1, vec3 p2);
 };

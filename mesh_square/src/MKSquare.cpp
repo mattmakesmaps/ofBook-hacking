@@ -63,3 +63,49 @@ void MKSquare::draw()
 {
 	mesh.draw();
 }
+
+int MKSquare::_is_left(vec3 p, vec3 p1, vec3 p2)
+{
+	/****
+	From GIS Algorithms:
+	Tests if point P is to the left of a line segment between p1 and p2
+	Output:
+		0 the point is on the line
+		> 0 p is to the left of the line
+		< 0 p is to the right of the line
+	****/
+	return (p2.x - p1.x) * (p.y - p1.y) - (p.x - p1.x) * (p2.y - p1.y);
+}
+
+bool MKSquare::pip_wn1(vec3 point)
+{
+	// Create a copy of the verticies and add a
+	// closing point.
+	auto verts = this->mesh.getVertices();
+	verts.push_back(vec3(0.0, 0.0, 0.0));
+
+	auto wn = 0;
+	auto n = verts.size();
+
+	for (int i = 0; i < n; ++i)
+	{
+		if (verts[i].y <= point.y)
+		{
+			if (verts[i + 1].y > point.y)
+			{
+				if (this->_is_left(point, verts[i], verts[i + 1]) > 0)
+					wn += 1;
+			}
+		}
+		else
+		{
+			if (verts[i + 1].y <= point.y)
+			{
+				if (this->_is_left(point, verts[i], verts[i + 1]) < 0)
+					wn -= 1;
+			}
+		}
+	}
+
+	return wn != 0;
+}
