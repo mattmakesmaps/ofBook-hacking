@@ -106,7 +106,17 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+	for (auto& square : m_squares)
+	{
+		if (square.pip_wn1(vec3(x, y, 0.0)))
+		{
+			square.displacementScale = square.displacementScale + 1;
+		}
+		else
+		{
+			square.displacementScale = 0;
+		}
+	}
 }
 
 //--------------------------------------------------------------

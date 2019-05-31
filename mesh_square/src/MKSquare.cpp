@@ -87,7 +87,7 @@ bool MKSquare::pip_wn1(vec3 point)
 	auto wn = 0;
 	auto n = verts.size();
 
-	for (int i = 0; i < n; ++i)
+	for (int i = 0; i < (n-1); ++i)
 	{
 		if (verts[i].y <= point.y)
 		{
