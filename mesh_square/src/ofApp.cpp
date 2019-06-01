@@ -15,6 +15,10 @@ void ofApp::setup() {
 	auto x_start = 100;
 	auto y_start = 100;
 
+	// Configure point origin.
+	circle_origin.x = 750;
+	circle_origin.y = 750;
+
 	/*
 	ofTranslate doesn't actually alter the vertexes of the shapes themselves,
 	therefore the point-in-polygon test doesn't reflect the actual screen
@@ -48,9 +52,27 @@ void ofApp::setup() {
 
 //--------------------------------------------------------------
 void ofApp::update() {
+	// BEGIN POINT UPDATE
+	travelling_circle.x = 750;
+	travelling_circle.y = 750;
+	float angle = ofGetElapsedTimef()*3.5;
+	float radius = 450;
+	travelling_circle.x = travelling_circle.x + radius * cos(angle * 0.7);
+	travelling_circle.y = travelling_circle.y + radius * -sin(angle * 0.9);
+	// END POINT UPDATE
+
 	for (auto& square : m_squares)
 	{
 		square.update();
+
+		if (square.pip_wn1(vec3(travelling_circle.x, travelling_circle.y, 0.0)))
+		{
+			square.displacementScale = square.displacementScale + 4;
+		}
+		else
+		{
+			square.displacementScale = 0;
+		}
 	}
 }
 
@@ -64,6 +86,12 @@ void ofApp::draw() {
 	{
 		m_squares[s].draw();
 	}
+
+
+	ofSetColor(255, 0, 127);
+	ofFill();
+	ofDrawCircle(travelling_circle.x, travelling_circle.y, 50);
+	// END POINT DRAWING
 
 	// Draw text box around mouse with current mouse position.
 	// Found from: https://github.com/openframeworks/openFrameworks/blob/master/examples/3d/pointPickerExample/src/ofApp.cpp#L54

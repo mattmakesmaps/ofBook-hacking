@@ -22,6 +22,9 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
+	vec2 travelling_circle;
+	vec2 circle_origin;
+
 	std::vector<MKSquare> m_squares;
 	ofEasyCam easyCam;
 };
