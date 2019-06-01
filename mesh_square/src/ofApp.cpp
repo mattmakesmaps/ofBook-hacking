@@ -68,7 +68,7 @@ void ofApp::update() {
 
 		if (square.pip_wn1(vec3(travelling_circle.x, travelling_circle.y, 0.0)))
 		{
-			square.displacementScale = square.displacementScale + 4;
+			square.displacementScale = square.displacementScale + 7;
 		}
 		else
 		{
