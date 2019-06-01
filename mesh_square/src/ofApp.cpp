@@ -18,6 +18,7 @@ void ofApp::setup() {
 	// Configure point origin.
 	circle_origin.x = 750;
 	circle_origin.y = 750;
+	circle_stopped = true;
 
 	/*
 	ofTranslate doesn't actually alter the vertexes of the shapes themselves,
@@ -55,11 +56,14 @@ void ofApp::update() {
 	// BEGIN POINT UPDATE
 	// Example Lissajus Curves:
 	// https://github.com/openframeworks/ofBook/blob/master/chapters/animation/code/13_sinExample_circlePlusPath_lissajus/src/ofApp.cpp#L11
-	travelling_circle = circle_origin;
-	float angle = ofGetElapsedTimef()*3.5;
-	float radius = 450;
-	travelling_circle.x = travelling_circle.x + radius * cos(angle * 0.7);
-	travelling_circle.y = travelling_circle.y + radius * -sin(angle * 0.9);
+	if (!circle_stopped)
+	{
+		travelling_circle = circle_origin;
+		float angle = ofGetElapsedTimef()*3.5;
+		float radius = 450;
+		travelling_circle.x = travelling_circle.x + radius * cos(angle * 0.7);
+		travelling_circle.y = travelling_circle.y + radius * -sin(angle * 0.9);
+	}
 	// END POINT UPDATE
 
 	for (auto& square : m_squares)
@@ -68,7 +72,7 @@ void ofApp::update() {
 
 		if (square.pip_wn1(vec3(travelling_circle.x, travelling_circle.y, 0.0)))
 		{
-			square.displacementScale = square.displacementScale + 7;
+			square.displacementScale = square.displacementScale + 5;
 		}
 		else
 		{
@@ -119,6 +123,11 @@ void ofApp::keyPressed(int key) {
 			square.displacementScale = square.displacementScale - 1;
 		}
 		break;
+	case 'x':
+		if (circle_stopped)
+			circle_stopped = false;
+		else
+			circle_stopped = true;
 	case 'z':
 		for (auto& square : m_squares)
 		{

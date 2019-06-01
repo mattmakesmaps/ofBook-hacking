@@ -24,6 +24,7 @@ public:
 
 	vec2 travelling_circle;
 	vec2 circle_origin;
+	bool circle_stopped;
 
 	std::vector<MKSquare> m_squares;
 	ofEasyCam easyCam;
