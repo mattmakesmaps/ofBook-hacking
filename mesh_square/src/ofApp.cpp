@@ -2,10 +2,12 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+	auto length = 350;
+
 	for (int i = 0; i < 9; ++i)
 	{
 		MKSquare tempSquare;
-		tempSquare.setup(250);
+		tempSquare.setup(length);
 		m_squares.push_back(tempSquare);
 	}
 
@@ -13,7 +15,13 @@ void ofApp::setup() {
 	auto x_start = 100;
 	auto y_start = 100;
 
-	// Attempt to translate glm::vec3s directly.
+	/*
+	ofTranslate doesn't actually alter the vertexes of the shapes themselves,
+	therefore the point-in-polygon test doesn't reflect the actual screen
+	coordinates.
+	
+	Attempt to translate verticies of each square's mesh directly.
+	*/
 	for (int s = 0; s < m_squares.size(); ++s)
 	{
 
@@ -28,12 +36,12 @@ void ofApp::setup() {
 
 		if ((s + 1) % squares_per_row == 0)
 		{
-			y_start += 350;
+			y_start += length + 100;
 			x_start = 100;
 		}
 		else
 		{
-			x_start += 350;
+			x_start += length + 100;
 		}
 	}
 }
@@ -57,6 +65,8 @@ void ofApp::draw() {
 		m_squares[s].draw();
 	}
 
+	// Draw text box around mouse with current mouse position.
+	// Found from: https://github.com/openframeworks/openFrameworks/blob/master/examples/3d/pointPickerExample/src/ofApp.cpp#L54
 	vec2 mouse(mouseX, mouseY);
 	auto x_str = std::to_string(mouseX);
 	auto y_str = std::to_string(mouseY);
