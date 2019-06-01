@@ -53,8 +53,9 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update() {
 	// BEGIN POINT UPDATE
-	travelling_circle.x = 750;
-	travelling_circle.y = 750;
+	// Example Lissajus Curves:
+	// https://github.com/openframeworks/ofBook/blob/master/chapters/animation/code/13_sinExample_circlePlusPath_lissajus/src/ofApp.cpp#L11
+	travelling_circle = circle_origin;
 	float angle = ofGetElapsedTimef()*3.5;
 	float radius = 450;
 	travelling_circle.x = travelling_circle.x + radius * cos(angle * 0.7);
