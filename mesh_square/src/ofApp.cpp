@@ -8,6 +8,34 @@ void ofApp::setup() {
 		tempSquare.setup(250);
 		m_squares.push_back(tempSquare);
 	}
+
+	auto squares_per_row = 3;
+	auto x_start = 100;
+	auto y_start = 100;
+
+	// Attempt to translate glm::vec3s directly.
+	for (int s = 0; s < m_squares.size(); ++s)
+	{
+
+		int numVerts = m_squares[s].mesh.getNumVertices();
+		for (int i = 0; i < numVerts; i++) {
+			glm::vec3 vert = m_squares[s].mesh.getVertex(i);
+			vert.x += (x_start);
+			vert.y += (y_start);
+			//vert.z += ();
+			m_squares[s].mesh.setVertex(i, vert);
+		}
+
+		if ((s + 1) % squares_per_row == 0)
+		{
+			y_start += 350;
+			x_start = 100;
+		}
+		else
+		{
+			x_start += 350;
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -24,53 +52,16 @@ void ofApp::draw() {
 	ofColor edgeColor = ofColor(255, 255, 255);
 	ofBackgroundGradient(centerColor, edgeColor, OF_GRADIENT_CIRCULAR);
 
-	// Draw a 3 by n grid of squares.
-	easyCam.begin();
-	int squares_per_row = 3;
-	ofPushMatrix();
-		for (int s = 0; s < m_squares.size(); ++s)
-		{
-			m_squares[s].draw();
-			if ((s + 1) % squares_per_row == 0)
-			{
-				ofPopMatrix();
-					ofTranslate(0.0, 250, 0.0);
-				ofPushMatrix();
-			}
-			else
-			{
-				ofTranslate(250, 0.0, 0.0);
-			}
-		}
-	ofPopMatrix();
-	easyCam.end();
+	for (int s = 0; s < m_squares.size(); ++s)
+	{
+		m_squares[s].draw();
+	}
 
-	// The above maps to the following.
-	/*
-	ofPushMatrix();
-		m_squares[0].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[1].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[2].draw();
-	ofPopMatrix();
-		ofTranslate(0.0, 250, 0.0);
-	ofPushMatrix();
-		m_squares[3].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[4].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[5].draw();
-	ofPopMatrix();
-		ofTranslate(0.0, 250, 0.0);
-	ofPushMatrix();
-		m_squares[6].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[7].draw();
-		ofTranslate(250, 0.0, 0.0);
-		m_squares[8].draw();
-	ofPopMatrix();
-	*/
+	vec2 mouse(mouseX, mouseY);
+	auto x_str = std::to_string(mouseX);
+	auto y_str = std::to_string(mouseY);
+	vec2 offset(10, -10);
+	ofDrawBitmapStringHighlight(x_str + " " + y_str, mouse + offset);
 }
 
 //--------------------------------------------------------------
@@ -110,7 +101,7 @@ void ofApp::mouseMoved(int x, int y ){
 	{
 		if (square.pip_wn1(vec3(x, y, 0.0)))
 		{
-			square.displacementScale = square.displacementScale + 1;
+			square.displacementScale = square.displacementScale + 4;
 		}
 		else
 		{

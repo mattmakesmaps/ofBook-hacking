@@ -57,6 +57,7 @@ void MKSquare::update()
 		vert.z += (ofSignedNoise(time*timeScale + timeOffsets.z)) * displacementScale;
 		mesh.setVertex(i, vert);
 	}
+
 }
 
 void MKSquare::draw()
@@ -82,7 +83,7 @@ bool MKSquare::pip_wn1(vec3 point)
 	// Create a copy of the verticies and add a
 	// closing point.
 	auto verts = this->mesh.getVertices();
-	verts.push_back(vec3(0.0, 0.0, 0.0));
+	verts.push_back(this->mesh.getVertex(0));
 
 	auto wn = 0;
 	auto n = verts.size();
